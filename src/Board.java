@@ -13,6 +13,16 @@ public class Board {
         return boardLength;
     }
 
+    public boolean placeToken(int column, char symbol) {
+        for(int row = boardHeight - 1; row >=0; row--) {
+            if (grid[row][column] == ' ') {
+                grid[row][column] = symbol;
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void resetBoard() {
         // Enhanced for loop: iterate over array without using an index
         for (char[] row : grid) {

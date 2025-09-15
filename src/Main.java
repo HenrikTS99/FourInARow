@@ -7,6 +7,16 @@ public class Main {
         board.printBoard();
 
         Player player1 = new Player();
-        player1.chooseColumn(board);
-    }
+
+        boolean success;
+        do {
+            int columnChoice = player1.chooseColumn(board.getBoardLength());
+            success = board.placeToken(columnChoice, 'X');
+            board.printBoard();
+
+            if (!success) {
+                System.out.println("That column is full. Choose another one!");
+            }
+        } while (!success);
+}
 }

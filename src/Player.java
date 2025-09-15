@@ -3,9 +3,8 @@ import java.util.Scanner;
 public class Player {
     private char Symbol;
 
-    public int chooseColumn(Board board) {
+    public int chooseColumn(int maxCol ) {
         int column;
-        int maxCol = board.getBoardLength();
         Scanner scanner = new Scanner(System.in);
         do {
             System.out.print("Enter a column (1-" + maxCol + "): ");
