@@ -2,8 +2,8 @@ import java.util.Arrays;
 
 public class Board {
     private char [][] grid = new char[6][7];
-    private final int boardLength = grid.length;
-    private final int boardHeight = grid[0].length;
+    private final int boardHeight = grid.length;
+    private final int boardLength = grid[0].length;
 
     public Board() {
         resetBoard();
@@ -24,18 +24,26 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.println("     1   2   3   4   5   6   7  ");
-        System.out.println("   |---|---|---|---|---|---|---|");
+        System.out.print("     ");
+        // Print column numbers
+        for (int col = 1; col <= boardLength; col++) {
+            System.out.print(col + "   ");
+        }
 
-        for (char row = 0, rowName = 'A'; row < boardLength; row++, rowName++) {
+        System.out.println();
+        System.out.println("   " + "|---".repeat(boardLength) + "|");
+
+        for (char row = 0, rowName = 'A'; row < boardHeight; row++, rowName++) {
+            // Print row letters
             System.out.print(" "+ rowName);
 
-            for (int col = 0; col < boardHeight; col++) {
+            // Print each grid character
+            for (int col = 0; col < boardLength; col++) {
                 System.out.print(" | " + grid[row][col]);
             }
 
             System.out.println(" |");
-            System.out.println("   |---|---|---|---|---|---|---|");
+            System.out.println("   " + "|---".repeat(boardLength) + "|");
         }
     }
 }
