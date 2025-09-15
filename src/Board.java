@@ -9,6 +9,10 @@ public class Board {
         resetBoard();
     }
 
+    public int getBoardLength() {
+        return boardLength;
+    }
+
     private void resetBoard() {
         // Enhanced for loop: iterate over array without using an index
         for (char[] row : grid) {

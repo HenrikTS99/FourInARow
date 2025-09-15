@@ -5,5 +5,8 @@ public class Main {
         Board board = new Board();
         board.printBoardArray();
         board.printBoard();
+
+        Player player1 = new Player();
+        player1.chooseColumn(board);
     }
 }
