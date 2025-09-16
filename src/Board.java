@@ -4,6 +4,7 @@ public class Board {
     private char [][] grid = new char[6][7];
     private final int boardHeight = grid.length;
     private final int boardLength = grid[0].length;
+    private Position lastMove;
 
     public Board() {
         resetBoard();
@@ -17,6 +18,7 @@ public class Board {
         for(int row = boardHeight - 1; row >=0; row--) {
             if (grid[row][column] == ' ') {
                 grid[row][column] = symbol;
+                lastMove = new Position(row, column);
                 return true;
             }
         }
