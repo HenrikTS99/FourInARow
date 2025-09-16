@@ -1,7 +1,15 @@
 import java.util.Scanner;
 
 public class Player {
-    private char Symbol;
+    private final char symbol;
+
+    public Player(char symbol) {
+        this.symbol = symbol;
+    }
+
+    public char getSymbol() {
+        return symbol;
+    }
 
     public int chooseColumn(int maxCol ) {
         int column;
