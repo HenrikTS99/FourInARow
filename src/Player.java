@@ -11,6 +11,7 @@ public class Player {
         return symbol;
     }
 
+    // Choose which column to play token. Keep asking until valid column chosen
     public int chooseColumn(int maxCol ) {
         int column;
         Scanner scanner = new Scanner(System.in);
@@ -27,7 +28,6 @@ public class Player {
 
         } while (column < 1 || column > maxCol);
 
-       System.out.println(column);
        // zero-base index choice
        return column - 1;
     }

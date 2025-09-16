@@ -11,9 +11,14 @@ public class Board {
     }
 
     public int getBoardLength() {
-        return boardLength;
+        return this.boardLength;
     }
 
+    public int getBoardHeight() {
+        return this.boardLength;
+    }
+
+    // Place symbol token at the "bottom" free slot of the selected column
     public boolean placeToken(int column, char symbol) {
         for(int row = boardHeight - 1; row >=0; row--) {
             if (grid[row][column] == ' ') {
@@ -22,22 +27,26 @@ public class Board {
                 return true;
             }
         }
+        // Return false if no spot for token (column is full)
         return false;
     }
 
-    public boolean checkFourInARow() {
-        char symbol = grid[lastMove.getRow()][lastMove.getCol()];
+    // Check if any possible 'four in a row' at last move made
+    public boolean fourInARow() {
+        int lastRow = lastMove.getRow();
+        int lastCol = lastMove.getCol();
+        char symbol = grid[lastRow][lastCol];
         int symbolCount = 0;
 
         // Check horizontal
         for (int i = -3; i <= 3;i++) {
-            int currCol = lastMove.getCol() + i;
+            int currCol = lastCol + i;
             // Skip if out of bounds
             if (currCol < 0 || currCol >= boardLength) {
                 continue;
             }
 
-            if (grid[lastMove.getRow()][currCol] == symbol) {
+            if (grid[lastRow][currCol] == symbol) {
                 symbolCount++;
                 if (symbolCount == 4) {
                     System.out.println("Horizontal win!");
@@ -47,16 +56,17 @@ public class Board {
                 symbolCount = 0;
             }
         }
+
         // Check vertical
         symbolCount = 0;
         for (int i = -3; i <= 3; i++) {
-            int currRow = lastMove.getRow() + i;
+            int currRow = lastRow + i;
             // Skip if out of bounds
             if (currRow < 0 || currRow >= boardHeight) {
                 continue;
             }
 
-            if (grid[currRow][lastMove.getCol()] == symbol) {
+            if (grid[currRow][lastCol] == symbol) {
                 symbolCount++;
                 if (symbolCount == 4) {
                     System.out.println("Vertical win!");
@@ -70,8 +80,8 @@ public class Board {
         // Check diagonal: Top left to bottom right
         symbolCount = 0;
         for (int i = -3; i<= 3; i++) {
-            int currRow = lastMove.getRow() + i;
-            int currCol = lastMove.getCol() + i;
+            int currRow = lastRow + i;
+            int currCol = lastCol + i;
             // Skip if out of bounds
             if (currRow < 0 || currRow >= boardHeight
                     || currCol < 0 || currCol >= boardLength) {
@@ -88,12 +98,13 @@ public class Board {
                 symbolCount = 0;
             }
         }
+
         // Check diagonal: Bottom left to top right
         symbolCount = 0;
         for (int i = -3; i<= 3; i++) {
             // Row - i to go from bottom up
-            int currRow = lastMove.getRow() - i;
-            int currCol = lastMove.getCol() + i;
+            int currRow = lastRow - i;
+            int currCol = lastCol + i;
             // Skip if out of bounds
             if (currRow < 0 || currRow >= boardHeight
                     || currCol < 0 || currCol >= boardLength) {

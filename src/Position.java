@@ -15,6 +15,7 @@ public class Position {
         return this.col;
     }
 
+    // For debugging
     public void printPosition() {
         System.out.println("Position (row/column: " + this.row + "/" + this.col );
     }
