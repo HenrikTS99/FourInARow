@@ -25,6 +25,95 @@ public class Board {
         return false;
     }
 
+    public boolean checkFourInARow() {
+        char symbol = grid[lastMove.getRow()][lastMove.getCol()];
+        int symbolCount = 0;
+
+        // Check horizontal
+        for (int i = -3; i <= 3;i++) {
+            int currCol = lastMove.getCol() + i;
+            // Skip if out of bounds
+            if (currCol < 0 || currCol >= boardLength) {
+                continue;
+            }
+
+            if (grid[lastMove.getRow()][currCol] == symbol) {
+                symbolCount++;
+                if (symbolCount == 4) {
+                    System.out.println("Horizontal win!");
+                    return true;
+                }
+            } else {
+                symbolCount = 0;
+            }
+        }
+        // Check vertical
+        symbolCount = 0;
+        for (int i = -3; i <= 3; i++) {
+            int currRow = lastMove.getRow() + i;
+            // Skip if out of bounds
+            if (currRow < 0 || currRow >= boardHeight) {
+                continue;
+            }
+
+            if (grid[currRow][lastMove.getCol()] == symbol) {
+                symbolCount++;
+                if (symbolCount == 4) {
+                    System.out.println("Vertical win!");
+                    return true;
+                }
+            } else {
+                symbolCount = 0;
+            }
+        }
+
+        // Check diagonal: Top left to bottom right
+        symbolCount = 0;
+        for (int i = -3; i<= 3; i++) {
+            int currRow = lastMove.getRow() + i;
+            int currCol = lastMove.getCol() + i;
+            // Skip if out of bounds
+            if (currRow < 0 || currRow >= boardHeight
+                    || currCol < 0 || currCol >= boardLength) {
+                continue;
+            }
+
+            if (grid[currRow][currCol] == symbol) {
+                symbolCount++;
+                if (symbolCount == 4) {
+                    System.out.println("Diagonal win! (top left to bottom right)");
+                    return true;
+                }
+            } else {
+                symbolCount = 0;
+            }
+        }
+        // Check diagonal: Bottom left to top right
+        symbolCount = 0;
+        for (int i = -3; i<= 3; i++) {
+            // Row - i to go from bottom up
+            int currRow = lastMove.getRow() - i;
+            int currCol = lastMove.getCol() + i;
+            // Skip if out of bounds
+            if (currRow < 0 || currRow >= boardHeight
+                    || currCol < 0 || currCol >= boardLength) {
+                continue;
+            }
+
+            if (grid[currRow][currCol] == symbol) {
+                symbolCount++;
+                if (symbolCount == 4) {
+                    System.out.println("Diagonal win! (bottom left to top right)");
+                    return true;
+                }
+            } else {
+                symbolCount = 0;
+            }
+        }
+
+        return false;
+    }
+
     private void resetBoard() {
         // Enhanced for loop: iterate over array without using an index
         for (char[] row : grid) {
@@ -33,6 +122,7 @@ public class Board {
         }
     }
 
+    // For debugging
     public void printBoardArray() {
         for (char[] row : grid) {
             System.out.println(Arrays.toString(row));
