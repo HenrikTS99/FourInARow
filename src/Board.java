@@ -31,97 +31,50 @@ public class Board {
         return false;
     }
 
-    // Check if any possible 'four in a row' at last move made
+    // Return true if four in a row, and prints out the direction won in.
     public boolean fourInARow() {
-        int lastRow = lastMove.getRow();
-        int lastCol = lastMove.getCol();
-        char symbol = grid[lastRow][lastCol];
-        int symbolCount = 0;
-
+        char symbol = grid[lastMove.getRow()][lastMove.getCol()];
         // Check horizontal
-        for (int i = -3; i <= 3;i++) {
-            int currCol = lastCol + i;
-            // Skip if out of bounds
-            if (currCol < 0 || currCol >= boardLength) {
-                continue;
-            }
-
-            if (grid[lastRow][currCol] == symbol) {
-                symbolCount++;
-                if (symbolCount == 4) {
-                    System.out.println("Horizontal win!");
-                    return true;
-                }
-            } else {
-                symbolCount = 0;
-            }
+        if (checkDirection(0, 1, symbol)) {
+            System.out.println("Horizontal win!");
+            return true;
         }
-
         // Check vertical
-        symbolCount = 0;
-        for (int i = -3; i <= 3; i++) {
-            int currRow = lastRow + i;
-            // Skip if out of bounds
-            if (currRow < 0 || currRow >= boardHeight) {
-                continue;
-            }
-
-            if (grid[currRow][lastCol] == symbol) {
-                symbolCount++;
-                if (symbolCount == 4) {
-                    System.out.println("Vertical win!");
-                    return true;
-                }
-            } else {
-                symbolCount = 0;
-            }
+        if (checkDirection(1, 0, symbol)) {
+            System.out.println("Vertical Win!");
+            return true;
         }
-
         // Check diagonal: Top left to bottom right
-        symbolCount = 0;
-        for (int i = -3; i<= 3; i++) {
-            int currRow = lastRow + i;
-            int currCol = lastCol + i;
-            // Skip if out of bounds
-            if (currRow < 0 || currRow >= boardHeight
-                    || currCol < 0 || currCol >= boardLength) {
-                continue;
-            }
-
-            if (grid[currRow][currCol] == symbol) {
-                symbolCount++;
-                if (symbolCount == 4) {
-                    System.out.println("Diagonal win! (top left to bottom right)");
-                    return true;
-                }
-            } else {
-                symbolCount = 0;
-            }
+        if (checkDirection(1, 1, symbol)) {
+            System.out.println("Diagonal win! (top left to bottom right)");
+            return true;
         }
-
         // Check diagonal: Bottom left to top right
-        symbolCount = 0;
-        for (int i = -3; i<= 3; i++) {
-            // Row - i to go from bottom up
-            int currRow = lastRow - i;
-            int currCol = lastCol + i;
+        if (checkDirection(-1, 1, symbol)) {
+            System.out.println("Diagonal win! (bottom left to top right)");
+            return true;
+        }
+        return false;
+    }
+
+    // Check for 4 symbols in a row in the direction specified by dRow and dCol
+    private boolean checkDirection(int dRow, int dCol, char symbol) {
+        int count = 0;
+
+        for (int i = -3; i <= 3; i++) {
+            int currRow = lastMove.getRow() + i * dRow;
+            int currCol = lastMove.getCol() + i * dCol;
+
             // Skip if out of bounds
-            if (currRow < 0 || currRow >= boardHeight
-                    || currCol < 0 || currCol >= boardLength) {
-                continue;
-            }
+            if (currCol < 0 || currCol >= boardLength || currRow < 0 || currRow >= boardHeight) continue;
 
             if (grid[currRow][currCol] == symbol) {
-                symbolCount++;
-                if (symbolCount == 4) {
-                    System.out.println("Diagonal win! (bottom left to top right)");
-                    return true;
-                }
+                count++;
+                if (count == 4) return true;
             } else {
-                symbolCount = 0;
+                count = 0;
             }
         }
-
         return false;
     }
 
